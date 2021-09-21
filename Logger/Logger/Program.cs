@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using Logger.Configs;
+using Newtonsoft.Json;
 
 namespace Logger
 {
@@ -6,6 +9,8 @@ namespace Logger
     {
         public static void Main(string[] args)
         {
+            var starter = new Starter();
+            starter.StartApplication();
         }
     }
 }
