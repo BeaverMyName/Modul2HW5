@@ -18,7 +18,6 @@ namespace Logger
             var serviceProvider = new ServiceCollection()
                 .AddSingleton<ILogService, LogService>()
                 .AddTransient<IReadService, FileReadService>()
-                .AddTransient<IFileStreamWriterService, FileStreamWriterService>()
                 .AddTransient<IFileConverterService, JsonFileConverterService>()
                 .AddTransient<IActionService, ActionService>()
                 .AddTransient<IConfigService, ConfigService>()

@@ -15,7 +15,6 @@ namespace Logger
         private readonly IActionService _actionService;
         private readonly IFileConverterService _fileConverterService;
         private readonly IDirectoryService _directoryService;
-        private readonly Random _random;
 
         public Application(
             ILogService logService,
@@ -27,18 +26,20 @@ namespace Logger
             _actionService = actionService;
             _fileConverterService = fileConverterService;
             _directoryService = directoryService;
-            _random = new Random();
         }
 
         public void Run()
         {
             _directoryService.CreateDirectory();
             _directoryService.ClearDirectory();
+
+            var random = new Random();
+
             for (var i = 0; i < 100; i++)
             {
                 try
                 {
-                    var result = _random.Next(3) switch
+                    var result = random.Next(3) switch
                     {
                         0 => _actionService.GetInfo(),
                         1 => _actionService.GetWarning(),
@@ -59,6 +60,8 @@ namespace Logger
                     _logService.WriteErrorLog($"Action failed by reason: {_fileConverterService.ConvertObjectToString(exception)}");
                 }
             }
+
+            _logService.SaveLog();
         }
     }
 }

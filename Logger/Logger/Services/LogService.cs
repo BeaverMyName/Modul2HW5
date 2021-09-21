@@ -10,16 +10,16 @@ namespace Logger.Services
 {
     public class LogService : ILogService
     {
-        private readonly IFileStreamWriterService _fileStreamWriterService;
+        private readonly IWriteService _writeService;
         private readonly StringBuilder _log;
         private readonly IConfigService _configService;
 
         public LogService(
-            IFileStreamWriterService fileStreamWriterService,
+            IWriteService writeService,
             IConfigService configService)
         {
             _log = new StringBuilder();
-            _fileStreamWriterService = fileStreamWriterService;
+            _writeService = writeService;
             _configService = configService;
         }
 
@@ -41,11 +41,15 @@ namespace Logger.Services
             WriteLog(log, LogType.Error);
         }
 
+        public void SaveLog()
+        {
+            _writeService.Write(Log, $"{_configService.LoggerConfig.DirectoryPath}{DateTime.UtcNow.ToString(_configService.LoggerConfig.FileName)}{_configService.LoggerConfig.FileExtension}");
+        }
+
         private void WriteLog(string log, LogType logType)
         {
             var formatLog = $"{DateTime.UtcNow.ToString(_configService.LoggerConfig.TimeFormat)}: {logType}: {log}";
             _log.AppendLine(formatLog);
-            _fileStreamWriterService.WriteInFile(formatLog, $"{_configService.LoggerConfig.DirectoryPath}{DateTime.UtcNow.ToString(_configService.LoggerConfig.FileName)}{_configService.LoggerConfig.FileExtension}");
         }
     }
 }
