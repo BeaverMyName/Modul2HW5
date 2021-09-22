@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Logger.Services.Abstractions;
+using Logger.Providers.Abstractions;
 using Logger.Services;
+using Logger.Providers;
 
 namespace Logger
 {
@@ -20,6 +22,7 @@ namespace Logger
                 .AddTransient<IReadService, FileReadService>()
                 .AddTransient<IFileConverterService, JsonFileConverterService>()
                 .AddTransient<IActionService, ActionService>()
+                .AddTransient<IConfigProvider, ConfigProvider>()
                 .AddSingleton<IConfigService, ConfigService>()
                 .AddTransient<IReadWriteService, FileService>()
                 .AddTransient<IDirectoryService, DirectoryService>()

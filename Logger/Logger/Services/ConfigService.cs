@@ -5,25 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using Logger.Configs;
 using Logger.Services.Abstractions;
+using Logger.Providers.Abstractions;
 using Newtonsoft.Json;
 
 namespace Logger.Services
 {
     public class ConfigService : IConfigService
     {
+        private readonly IConfigProvider _configProvider;
         private readonly Config _config;
-        private readonly IReadWriteService _readerWriterService;
-        private readonly IFileConverterService _fileConverterService;
-        private readonly string _fileName;
 
         public ConfigService(
-            IReadWriteService readerWriterService,
-            IFileConverterService fileConverterService)
+            IConfigProvider configProvider)
         {
-            _readerWriterService = readerWriterService;
-            _fileConverterService = fileConverterService;
-            _fileName = "config.json";
-            _config = _fileConverterService.ConvertFileToConfig(_readerWriterService.ReaderService.Read(_fileName));
+            _configProvider = configProvider;
+            _config = _configProvider.Config;
         }
 
         public Config Config => _config;
