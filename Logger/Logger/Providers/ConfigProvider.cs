@@ -13,17 +13,17 @@ namespace Logger.Providers
     {
         private readonly string _fileName;
         private readonly Config _config;
-        private readonly IReadWriteService _readerWriterService;
+        private readonly IFileService _fileService;
         private readonly IFileConverterService _fileConverterService;
 
         public ConfigProvider(
-            IReadWriteService readerWriterService,
+            IFileService fileService,
             IFileConverterService fileConverterService)
         {
-            _readerWriterService = readerWriterService;
+            _fileService = fileService;
             _fileConverterService = fileConverterService;
             _fileName = "config.json";
-            _config = _fileConverterService.ConvertFileToConfig(_readerWriterService.ReaderService.Read(_fileName));
+            _config = _fileConverterService.ConvertFileToConfig(_fileService.Read(_fileName));
         }
 
         public Config Config => _config;

@@ -7,13 +7,13 @@ using Logger.Exceptions;
 using Logger.Services;
 using Logger.Services.Abstractions;
 
-namespace Logger.Services
+namespace Logger.Helpers
 {
-    public class ActionService : IActionService
+    public class Actions
     {
         private readonly ILogService _logService;
 
-        public ActionService(
+        public Actions(
             ILogService logService)
         {
             _logService = logService;

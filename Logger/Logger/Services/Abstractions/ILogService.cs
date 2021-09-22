@@ -14,6 +14,5 @@ namespace Logger.Services.Abstractions
         public void WriteInfoLog(string log);
         public void WriteWarningLog(string log);
         public void WriteErrorLog(string log);
-        public void SaveLog();
     }
 }

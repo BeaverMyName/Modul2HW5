@@ -6,24 +6,22 @@ using System.Threading.Tasks;
 using Logger.Services;
 using Logger.Services.Abstractions;
 using Logger.Exceptions;
+using Logger.Helpers;
 
 namespace Logger
 {
     public class Application
     {
         private readonly ILogService _logService;
-        private readonly IActionService _actionService;
         private readonly IFileConverterService _fileConverterService;
         private readonly IDirectoryService _directoryService;
 
         public Application(
             ILogService logService,
-            IActionService actionService,
             IFileConverterService fileConverterService,
             IDirectoryService directoryService)
         {
             _logService = logService;
-            _actionService = actionService;
             _fileConverterService = fileConverterService;
             _directoryService = directoryService;
         }
@@ -33,6 +31,8 @@ namespace Logger
             _directoryService.CreateDirectory();
             _directoryService.ClearDirectory();
 
+            var actions = new Actions(_logService);
+
             var random = new Random();
 
             for (var i = 0; i < 100; i++)
@@ -41,9 +41,9 @@ namespace Logger
                 {
                     var result = random.Next(3) switch
                     {
-                        0 => _actionService.GetInfo(),
-                        1 => _actionService.GetWarning(),
-                        2 => _actionService.GetError(),
+                        0 => actions.GetInfo(),
+                        1 => actions.GetWarning(),
+                        2 => actions.GetError(),
                         _ => throw new ArgumentException()
                     };
                 }
@@ -60,8 +60,6 @@ namespace Logger
                     _logService.WriteErrorLog($"Action failed by reason: {_fileConverterService.ConvertObjectToString(exception)}");
                 }
             }
-
-            _logService.SaveLog();
         }
     }
 }

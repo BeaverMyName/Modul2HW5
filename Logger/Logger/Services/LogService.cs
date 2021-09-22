@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 using Logger.Services.Abstractions;
 using Logger.Enums;
 
@@ -10,17 +11,19 @@ namespace Logger.Services
 {
     public class LogService : ILogService
     {
-        private readonly IWriteService _writeService;
+        private readonly IFileService _fileService;
         private readonly StringBuilder _log;
         private readonly IConfigService _configService;
+        private readonly StreamWriter _streamWriter;
 
         public LogService(
-            IWriteService writeService,
+            IFileService fileService,
             IConfigService configService)
         {
             _log = new StringBuilder();
-            _writeService = writeService;
+            _fileService = fileService;
             _configService = configService;
+            _streamWriter = new StreamWriter($"{_configService.LoggerConfig.DirectoryPath}{DateTime.UtcNow.ToString(_configService.LoggerConfig.FileName)}{_configService.LoggerConfig.FileExtension}");
         }
 
         public string Log => _log.ToString();
@@ -41,15 +44,11 @@ namespace Logger.Services
             WriteLog(log, LogType.Error);
         }
 
-        public void SaveLog()
-        {
-            _writeService.Write(Log, $"{_configService.LoggerConfig.DirectoryPath}{DateTime.UtcNow.ToString(_configService.LoggerConfig.FileName)}{_configService.LoggerConfig.FileExtension}");
-        }
-
         private void WriteLog(string log, LogType logType)
         {
             var formatLog = $"{DateTime.UtcNow.ToString(_configService.LoggerConfig.TimeFormat)}: {logType}: {log}";
             _log.AppendLine(formatLog);
+            _fileService.Write(formatLog, _streamWriter);
         }
     }
 }

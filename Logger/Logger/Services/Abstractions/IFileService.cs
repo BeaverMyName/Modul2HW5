@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Logger.Services.Abstractions
 {
-    public interface IWriteService
+    public interface IFileService
     {
-        public void Write(string text, string path);
+        public void Write(string text, StreamWriter streamWriter);
+        public string Read(string path);
     }
 }

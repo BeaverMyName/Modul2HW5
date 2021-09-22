@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,20 +8,17 @@ using Logger.Services.Abstractions;
 
 namespace Logger.Services
 {
-    public class FileService : IReadWriteService
+    public class FileService : IFileService
     {
-        private readonly IReadService _readerService;
-        private readonly IWriteService _writerService;
-
-        public FileService(
-            IReadService readerService,
-            IWriteService writerService)
+        public string Read(string path)
         {
-            _readerService = readerService;
-            _writerService = writerService;
+            return File.ReadAllText(path);
         }
 
-        public IReadService ReaderService => _readerService;
-        public IWriteService WriterService => _writerService;
+        public void Write(string text, StreamWriter streamWriter)
+        {
+            streamWriter.WriteLine(text);
+            streamWriter.Flush();
+        }
     }
 }

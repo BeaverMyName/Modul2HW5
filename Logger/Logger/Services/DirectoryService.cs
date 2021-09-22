@@ -39,7 +39,7 @@ namespace Logger.Services
             if (!IsEnoughSpace(files))
             {
                 Array.Sort(files, new FileCreationTimeComparer());
-                for (var i = 0; i < files.Length - DirectoryConfig.Capacity + 1; i++)
+                for (var i = 0; i < files.Length - DirectoryConfig.Capacity; i++)
                 {
                     File.Delete(files[i].FullName);
                 }
