@@ -20,7 +20,7 @@ namespace Logger
                 .AddTransient<IReadService, FileReadService>()
                 .AddTransient<IFileConverterService, JsonFileConverterService>()
                 .AddTransient<IActionService, ActionService>()
-                .AddTransient<IConfigService, ConfigService>()
+                .AddSingleton<IConfigService, ConfigService>()
                 .AddTransient<IReadWriteService, FileService>()
                 .AddTransient<IDirectoryService, DirectoryService>()
                 .AddTransient<IWriteService, FileWriteService>()
