@@ -17,13 +17,13 @@ namespace Logger
         {
             var serviceProvider = new ServiceCollection()
                 .AddSingleton<ILogService, LogService>()
-                .AddTransient<IReadService, FileReadService>()
-                .AddTransient<IFileConverterService, JsonFileConverterService>()
+                .AddSingleton<IReadService, FileReadService>()
+                .AddSingleton<IFileConverterService, JsonFileConverterService>()
                 .AddTransient<IActionService, ActionService>()
-                .AddTransient<IConfigService, ConfigService>()
-                .AddTransient<IReadWriteService, FileService>()
-                .AddTransient<IDirectoryService, DirectoryService>()
-                .AddTransient<IWriteService, FileWriteService>()
+                .AddSingleton<IConfigService, ConfigService>()
+                .AddSingleton<IReadWriteService, FileService>()
+                .AddSingleton<IDirectoryService, DirectoryService>()
+                .AddSingleton<IWriteService, FileWriteService>()
                 .AddTransient<Application>()
                 .BuildServiceProvider();
 
