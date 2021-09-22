@@ -23,28 +23,6 @@ namespace Logger.Services
             _readerWriterService = readerWriterService;
             _fileConverterService = fileConverterService;
             _fileName = "config.json";
-
-            var config = new Config()
-            {
-                LoggerConfig = new LoggerConfig()
-                {
-                    LineSeparator = 10,
-                    TimeFormat = "hh:mm:ss",
-                    DirectoryPath = "Logs/",
-                    BackUpDirectoryPath = "BackUp/",
-                    FileName = "hh.mm.ss dd.MM.yyyy",
-                    FileExtension = ".txt"
-                },
-                DirectoryConfig = new DirectoryConfig()
-                {
-                    Capacity = 3,
-                    DirectoryPath = "Logs/"
-                }
-            };
-
-            var json = JsonConvert.SerializeObject(config);
-
-            _readerWriterService.WriterService.Write(json, _fileName);
             _config = _fileConverterService.ConvertFileToConfig(_readerWriterService.ReaderService.Read(_fileName));
         }
 

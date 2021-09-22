@@ -1,0 +1,1 @@
+{"LoggerConfig":{"LineSeparator":10,"TimeFormat":"hh:mm:ss","DirectoryPath":"Logs/","BackUpDirectoryPath":"BackUp/","FileName":"hh.mm.ss dd.MM.yyyy","FileExtension":".txt"},"DirectoryConfig":{"Capacity":3,"DirectoryPath":"Logs/"}}
